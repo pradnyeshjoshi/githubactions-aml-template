@@ -12,12 +12,12 @@ jobs:
           python-version: "3.8"
       - name: Install azureml-core on a GitHub hosted server
         run: pip install azureml-core
+      - name: Install az ml
+        run: az extension add -n ml -y
       - name: Log in to Azure
         uses: azure/login@v1
         with:
           creds: ${{secrets.AZ_AE_CREDS}}
-      - name: Install az ml
-        run: az extension add -n ml -y
       - name: Check if az ml folder works
         run: az ml folder
       - name: Verify az ml installation and see available subcommands
