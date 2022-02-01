@@ -4,19 +4,20 @@ jobs:
   Explore-AML-with-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - name: Setup python
         uses: actions/setup-python@v2
         with: 
           python-version: "3.8"
-      - name: Install azureml-core
+      - name: Install azureml-core on a GitHub hosted server
         run: pip install azureml-core
-      - name: Run a test
-        run: python test.py
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZ_AE_CREDS}}
+      - name: Attach to workspace
+        run: az ml folder attach -w pradjoshi-aml-ws -g pradjoshi-aml-rg
+      - name: Submit a test to AML
+        run: python workflows/job.py
       - run: echo "🍏 This job's status is ${{ job.status }}."
-
