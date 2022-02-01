@@ -18,6 +18,8 @@ jobs:
           creds: ${{secrets.AZ_AE_CREDS}}
       - name: Install az ml
         run: az extension add -n ml -y
+      - name: Check if az ml folder works
+        run: az ml folder
       - name: Verify az ml installation and see available subcommands
         run: az ml -h
       - name: Attach to workspace
