@@ -12,20 +12,10 @@ jobs:
           python-version: "3.8"
       - name: Install azureml-core on a GitHub hosted server
         run: pip install azureml-core
-      - name: check azure cli version
-        run: az version
-      - name: Install az cli ml extension
-        run: az extension add -n ml -y
       - name: Log in to Azure
         uses: azure/login@v1
         with:
           creds: ${{secrets.AZ_AE_CREDS}}
-      - name: Check if az ml folder works
-        run: az ml folder
-      - name: Verify az ml installation and see available subcommands
-        run: az ml -h
-      - name: Attach to workspace
-        run: az ml folder attach -w pradjoshi-aml-ws -g pradjoshi-aml-rg
       - name: Submit a test to AML
         run: python workflows/job.py
       - run: echo "🍏 This job's status is ${{ job.status }}."
