@@ -2,9 +2,23 @@
 from pathlib import Path
 from azureml.core import Workspace
 from azureml.core import ScriptRunConfig, Experiment, Environment
+import os
 
-# get workspace
-ws = Workspace.from_config()
+subscription_id = os.getenv("SUBSCRIPTION_ID", default="<my-subscription-id>")
+resource_group = os.getenv("RESOURCE_GROUP", default="<my-resource-group>")
+workspace_name = os.getenv("WORKSPACE_NAME", default="<my-workspace-name>")
+workspace_region = os.getenv("WORKSPACE_REGION", default="eastus2")
+
+try:
+    ws = Workspace(subscription_id = subscription_id, resource_group = resource_group, workspace_name = workspace_name)
+    # write the details of the workspace to a configuration file to the notebook library
+    ws.write_config()
+    print("Workspace configuration succeeded. Skip the workspace creation steps below")
+except:
+    print("Workspace not accessible. Change your parameters or create a new workspace below")
+
+# # get workspace
+# ws = Workspace.from_config()
 
 # get root of git repo
 prefix = Path(__file__).parent
