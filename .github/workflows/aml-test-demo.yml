@@ -16,6 +16,8 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{secrets.AZ_AE_CREDS}}
+      - name: Add ml extension
+        run: az extension add -n ml -y
       - name: Attach to workspace
         run: az ml folder attach -w pradjoshi-aml-ws -g pradjoshi-aml-rg
       - name: Submit a test to AML
