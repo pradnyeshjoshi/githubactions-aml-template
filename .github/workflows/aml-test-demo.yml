@@ -16,8 +16,8 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{secrets.AZ_AE_CREDS}}
-      - name: Install azure-cli
-        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      - name: Install azure-cli-ml
+        run: pip install -r https://aka.ms/az-ml-o16n-cli-requirements-file
       - name: Attach to workspace
         run: az ml folder attach -w pradjoshi-aml-ws -g pradjoshi-aml-rg
       - name: Submit a test to AML
