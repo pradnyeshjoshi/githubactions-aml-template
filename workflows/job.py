@@ -2,10 +2,19 @@
 from pathlib import Path
 from azureml.core import Workspace
 from azureml.core import ScriptRunConfig, Experiment, Environment
+import json
+from azureml.core.authentication import AzureCliAuthentication
 
 # get workspace
-ws = Workspace.from_config()
+f = open("workspace-config.json")
+ws_config = json.load(f)
+f.close()
+cli_auth = AzureCliAuthentication()
 
+ws = Workspace(subscription_id=ws_config["subscription_id"],
+               resource_group=ws_config["resource_group"],
+               workspace_name=ws_config["workspace_name"],
+               auth=cli_auth)
 # get root of git repo
 prefix = Path(__file__).parent.parent
 
