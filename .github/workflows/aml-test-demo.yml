@@ -10,8 +10,8 @@ jobs:
         uses: actions/setup-python@v2
         with: 
           python-version: "3.8"
-      - name: Install azureml-core on a GitHub hosted server
-        run: pip install azureml-core
+      - name: Install azureml-core and azure-cli on a GitHub hosted server
+        run: pip install azureml-core azure-cli
       - name: Log in to Azure
         uses: azure/login@v1
         with:
